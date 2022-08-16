@@ -3,9 +3,11 @@
 cdrec() {
     cd "$@"
 
-    directories=$(ls -1A)
-    folder=$(echo $directories | sed -n 1p)
+    listall=$(ls -1A)
+    firstitem=$(echo $listall | sed -n 1p)
 
-    if [[ $(echo $directories | wc -l) == 1 && $(file -b $folder) == "directory" ]] \
-    cdrec $folder
+    # if there is only 1 item and its a directory then cd and check again
+    if [[ $(echo $listall | wc -l) == 1 && $(file -b $firstitem) == "directory" ]] \
+    cdrec $firstitem
+    
 }
